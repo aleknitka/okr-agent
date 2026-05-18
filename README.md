@@ -26,7 +26,7 @@ Teams can use this agent with their company OKRs and other relevant context to w
 
 The agent helps by:
 
-- placing proposed OKRs in the context of business value and company aims
+- placing proposed OKRs in the context of business value and strategic aims
 - improving the clarity of objectives without making them overly vague or overly detailed
 - refining key results so they are measurable and useful for decision-making
 - translating delivery constraints such as tech stack, platforms, tools, and methods into more realistic actions
