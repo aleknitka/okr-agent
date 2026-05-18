@@ -38,4 +38,4 @@ The agent helps by:
 2. Share team-level constraints, including the tech stack, platforms, tools, delivery methods, and scope boundaries.
 3. Use the agent to draft or refine objectives, key results, and actions.
 4. Review the output against business value, clarity, measurability, and execution realism.
-5. Iterate until the OKRs are aligned with company aims and usable by the team in practice.
+5. Iterate until the OKRs are aligned with strategic aims and usable by the team in practice.
