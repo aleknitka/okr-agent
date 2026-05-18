@@ -30,7 +30,7 @@ The agent helps by:
 - improving the clarity of objectives without making them overly vague or overly detailed
 - refining key results so they are measurable and useful for decision-making
 - translating delivery constraints such as tech stack, platforms, tools, and methods into more realistic actions
-- helping teams define actions that can be used to track progress toward fulfilling objectives
+- helping teams define actions that drive the key results needed to achieve objectives
 
 ## Suggested Team Workflow
 
