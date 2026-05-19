@@ -1,7 +1,4 @@
-# Company OKRs & Business Context — Fintech Scale-up (Example)
-
-> This is an example file for dry-running the `elicit-okr` skill.
-> Copy it to `knowledge/company-okrs.md` before starting a session.
+# Company OKRs & Business Context — Fintech Scale-up
 
 ## Strategic Context
 

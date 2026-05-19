@@ -71,10 +71,11 @@ Then write a Python script to `presentations/_build_okr.py` that creates the PPT
 For each **valid** OKR file (from the validated list in Step 1 only), add one slide with:
 - Title: the objective title extracted from the `# OKR N:` heading line
 - Body content in this order:
-  1. Objective statement (from `## Objective` section) — bold
-  2. Blank line
-  3. `Key Results` sub-heading, then numbered list of KRs (from `## Key Results`), each on its own line including the CO-N reference
-  4. If the file has an `## Actions` section: `Actions` sub-heading, then bulleted list of actions
+  1. Type label from the `**Type:**` line — shown as `[Committed]`, `[Aspirational]`, or `[Learning]`
+  2. Objective statement (from `## Objective` section) — bold
+  3. Blank line
+  4. `Key Results` sub-heading, then numbered list of KRs (from `## Key Results`), each on its own line including the CO-N reference
+  5. `Initiatives` sub-heading, then bulleted list of initiatives (from `## Initiatives`)
 
 **Slide N+3 — Closing**
 - Title: `Let's make it happen`
