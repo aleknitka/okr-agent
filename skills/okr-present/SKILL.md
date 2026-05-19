@@ -2,7 +2,7 @@
 name: okr-present
 description: Generates a PPTX slide deck from okrs/okr-N.md files and saves it to presentations/. Title slide includes team name, quarter, and year.
 license: MIT
-allowed-tools: "Read, Write, Bash"
+allowed-tools: "Read, Write, Bash, Grep"
 metadata:
   author: ""
   version: "1.0.0"
@@ -19,8 +19,8 @@ You are generating an OKR PPTX presentation from saved OKR files. Follow these s
 
 ### Step 1 — Verify OKR files exist
 
-1. Attempt to read `okrs/okr-1.md`. If the file does not exist, tell the user to run the `okr-elicit` skill first and stop.
-2. Read all available `okrs/okr-N.md` files (increment N until a file is not found). Collect them all.
+1. List all files in the `okrs/` directory matching the `okr-*.md` pattern. If none exist, tell the user to run the `elicit-okr` skill first and stop.
+2. Read each matched OKR file and collect them all.
 3. For each file, confirm it contains a `## Objective` section and at least one `## Key Results` item. Warn about any incomplete files but continue with the valid ones.
 
 ---
@@ -45,10 +45,10 @@ Read `knowledge/okr-presentation-template.md`. Use it as the structural guide fo
 
 ### Step 4 — Build the presentation
 
-First, ensure python-pptx is available:
+First, create the `presentations/` directory if it does not exist:
 
 ```bash
-pip install python-pptx --quiet 2>&1 | tail -1
+mkdir -p presentations
 ```
 
 Then write a Python script to `presentations/_build_okr.py` that creates the PPTX using the content from the OKR files and the metadata from Step 2. The script must:
@@ -79,20 +79,18 @@ Use the `LAYOUT_TITLE = 0` (title slide) layout for slides 1 and the closing sli
 
 Output filename:
 ```
-presentations/okr-[Q][Year]-[team-name-lowercase-hyphenated].pptx
+presentations/okr-[Q]-[Year]-[team-name-lowercase-hyphenated].pptx
 ```
 Example: `presentations/okr-Q2-2025-platform-team.pptx`
-
-Create the `presentations/` directory if it does not exist.
 
 ---
 
 ### Step 5 — Execute and verify
 
-Run the script:
+Run the script via uv (no separate install step needed):
 
 ```bash
-python presentations/_build_okr.py
+uv run --with python-pptx presentations/_build_okr.py
 ```
 
 Check that the output file exists and is non-empty. If the script errors, fix the error and re-run. Remove the temporary build script after a successful run:

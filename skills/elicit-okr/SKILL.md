@@ -1,8 +1,8 @@
 ---
-name: okr-elicit
+name: elicit-okr
 description: Interactively elicits team-level OKRs (Objectives, Key Results, and Actions) aligned to company strategy, then saves each one to okrs/okr-N.md. Skips if valid OKR files already exist.
 license: MIT
-allowed-tools: "Read, Write"
+allowed-tools: "Read, Write, Grep"
 metadata:
   author: ""
   version: "1.0.0"
@@ -21,12 +21,12 @@ You are facilitating an OKR elicitation session. Follow these steps precisely.
 
 Before asking the user anything, scan for existing OKR files:
 
-1. Attempt to read each file matching `okrs/okr-*.md` (start from `okrs/okr-1.md` and increment until a file is not found).
+1. List all files in the `okrs/` directory and identify those matching the `okr-*.md` pattern.
 2. For each file found, check that it contains:
    - A non-empty `## Objective` section (at least one line of content after the heading)
    - At least 2 numbered items under `## Key Results`
 3. Read `knowledge/okr-requirements.md` to find the configured maximum number of objectives.
-4. If the number of valid OKR files equals or exceeds the minimum required (at least 1, and the user confirmed they are done in a prior session), print a summary of what exists and stop — do not ask any questions.
+4. If the number of valid OKR files reaches the configured maximum, print a summary and stop. If valid files exist but haven't reached the maximum, show the summary and ask the user if they want to continue defining more OKRs or edit existing ones.
 
 If any OKR file is missing or invalid (missing Objective, fewer than 2 Key Results), proceed with elicitation for the incomplete ones only.
 
@@ -46,7 +46,7 @@ Extract and hold in mind:
 - Whether actions are enabled (`include_actions: true`)
 - The number of actions per key result when enabled (default: 1–3)
 
-If either knowledge file is missing or empty placeholders remain (e.g., text contains `<` and `>`), warn the user that the knowledge files need to be filled in before proceeding, and stop.
+If either knowledge file is missing or still contains unfilled template markers (e.g., `<Brief description...>` or `CO-1: <...>`), warn the user that the knowledge files need to be filled in before proceeding, and stop.
 
 ---
 
@@ -96,7 +96,7 @@ For each objective (numbered 1 to N, where N is the user's chosen count):
 
 ### Step 5 — Save the OKR file
 
-After completing elicitation for each objective, immediately write it to `okrs/okr-N.md` (where N matches the objective number).
+After completing elicitation for each objective, immediately write it to `okrs/okr-N.md` (where N matches the objective number). The `okrs/` directory already exists via `.gitkeep`.
 
 Use exactly this format:
 
