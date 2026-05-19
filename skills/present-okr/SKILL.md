@@ -1,5 +1,5 @@
 ---
-name: okr-present
+name: present-okr
 description: Generates a PPTX slide deck from okrs/okr-N.md files and saves it to presentations/. Title slide includes team name, quarter, and year.
 license: MIT
 allowed-tools: "Read, Write, Bash, Grep"
