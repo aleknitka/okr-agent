@@ -63,7 +63,9 @@ Ask how many team objectives they want to define this cycle (within the configur
 
 ### Step 4 — Elicit each objective
 
-For each objective (numbered 1 to N, where N is the user's chosen count):
+Before starting, determine the starting index: count the valid OKR files already found in Step 1 (call this `existing`). New objectives are numbered `existing + 1` upward.
+
+For each new objective (numbered from `existing + 1` to `existing + N`, where N is the count the user chose in Step 3):
 
 **4a. Propose or accept an objective**
 - Ask the user to state a proposed objective, or offer to suggest one based on the company OKRs.
@@ -96,7 +98,7 @@ For each objective (numbered 1 to N, where N is the user's chosen count):
 
 ### Step 5 — Save the OKR file
 
-After completing elicitation for each objective, immediately write it to `okrs/okr-N.md` (where N matches the objective number). The `okrs/` directory already exists via `.gitkeep`.
+After completing elicitation for each objective, immediately write it to `okrs/okr-N.md` where N is the objective's index from Step 4 (`existing + 1`, `existing + 2`, …). Never overwrite a file that already contains a valid OKR. The `okrs/` directory already exists via `.gitkeep`.
 
 Use exactly this format:
 
