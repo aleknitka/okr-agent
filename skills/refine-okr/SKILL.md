@@ -59,7 +59,7 @@ For each OKR file, evaluate it against every check below. Record all findings be
 
 #### Check 5 — Key result quality ([ref](references/google-playbook.md#good-key-results))
 
-- Does each KR include a specific numeric target and deadline? Missing metrics are **High**.
+- Does each KR include a specific numeric target and deadline? Missing metrics are **High** — except for Learning OKRs, where KRs may describe qualitative evidence of learning rather than a numeric target.
 - Is each KR an outcome, not an activity? Flag activity language ("consult", "help", "analyze", "implement", "deliver") as **High**.
 - **Sufficiency test**: would scoring 1.0 on every KR guarantee the objective is met? If doubt remains, the KRs are insufficient — flag **Medium**.
 
@@ -110,5 +110,5 @@ Ask the user:
 If the user wants to fix specific OKRs:
 - Work through each flagged section (objective, type, KRs, initiatives) one at a time.
 - Propose the corrected wording and confirm with the user before writing.
-- Overwrite the relevant okrs/okr-N.md following the format defined in knowledge/okr-requirements.md.
+- Overwrite the relevant `okrs/okr-N.md` following the format defined in `knowledge/okr-requirements.md` (already loaded in Step 1).
 - Tell the user the file has been saved after each fix.
