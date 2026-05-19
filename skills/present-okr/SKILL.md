@@ -23,8 +23,10 @@ You are generating an OKR PPTX presentation from saved OKR files. Follow these s
 2. Read each matched OKR file and collect them all.
 3. For each file, confirm it contains **all** of the following:
    - A `# OKR N:` heading line (required for slide title extraction)
+   - A `**Type:**` line set to `Committed`, `Aspirational`, or `Learning`
    - A non-empty `## Objective` section
    - At least 2 numbered items under `## Key Results`
+   - A non-empty `## Initiatives` section
    Files that fail any check are **invalid** — warn the user and exclude them from the valid list.
 4. If no valid files remain after filtering, tell the user to fix their OKR files using `elicit-okr` and stop. Do not proceed with an empty valid set.
 
