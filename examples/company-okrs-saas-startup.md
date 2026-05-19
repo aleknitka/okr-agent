@@ -1,7 +1,4 @@
-# Company OKRs & Business Context — SaaS Startup (Example)
-
-> This is an example file for dry-running the `elicit-okr` skill.
-> Copy it to `knowledge/company-okrs.md` before starting a session.
+# Company OKRs & Business Context — SaaS Startup
 
 ## Strategic Context
 

@@ -37,12 +37,13 @@ This file defines the slide structure used by the `okr-present` skill when gener
 
 Repeat for each `okrs/okr-N.md` file.
 
-| Field       | Value                                                         | PPTX Layout           |
-|-------------|---------------------------------------------------------------|-----------------------|
-| Title       | Objective title from `# OKR N:` heading                      | Title + Content (1)   |
-| Objective   | Statement from `## Objective` section — bold                  |                       |
-| Key Results | Numbered list from `## Key Results`, including CO-N links     |                       |
-| Actions     | Bulleted list from `## Actions` section (omit if not present) |                       |
+| Field       | Value                                                             | PPTX Layout           |
+|-------------|-------------------------------------------------------------------|-----------------------|
+| Title       | Objective title from `# OKR N:` heading                          | Title + Content (1)   |
+| Type        | `**Type:**` value — shown as a label after the title              |                       |
+| Objective   | Statement from `## Objective` section — bold                      |                       |
+| Key Results | Numbered list from `## Key Results`, including CO-N links         |                       |
+| Initiatives | Bulleted list from `## Initiatives` section                       |                       |
 
 ---
 
@@ -59,7 +60,7 @@ Repeat for each `okrs/okr-N.md` file.
 
 - Title font size: 36pt
 - Body font size: 18pt
-- Keep each slide focused — one objective, its key results, and its actions only
+- Keep each slide focused — one objective, its key results, and its initiatives only
 - Key results must show their measurable target and CO-N reference
 - If a slide has more than 4 key results, consider splitting the objective into two slides
 - Output format: `.pptx` — compatible with PowerPoint, Keynote, and Google Slides

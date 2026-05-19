@@ -1,6 +1,6 @@
 ---
 name: elicit-okr
-description: Interactively elicits team-level OKRs (Objectives, Key Results, and Actions) aligned to company strategy, then saves each one to okrs/okr-N.md. Skips if valid OKR files already exist.
+description: Interactively elicits team-level OKRs (Objectives, Key Results, and Initiatives) aligned to company strategy, then saves each one to okrs/okr-N.md. Skips if valid OKR files already exist.
 license: MIT
 allowed-tools: "Read, Write, Bash, Grep"
 metadata:
@@ -22,16 +22,17 @@ You are facilitating an OKR elicitation session. Follow these steps precisely.
 Before asking the user anything, scan for existing OKR files:
 
 1. List all files in the `okrs/` directory and identify those matching the `okr-*.md` pattern.
-2. Read `knowledge/okr-requirements.md` to find the configured maximum number of objectives and whether `include_actions` is true.
+2. Read `knowledge/okr-requirements.md` to find the configured maximum number of objectives.
 3. For each file found, check that it contains:
    - A `# OKR N:` heading line
+   - A `**Type:**` line set to `Committed`, `Aspirational`, or `Learning`
    - A non-empty `## Objective` section (at least one line of content after the heading)
    - At least 2 numbered items under `## Key Results`
-   - If `include_actions: true`: a non-empty `## Actions` section
+   - A non-empty `## Initiatives` section
 4. A file that fails any check above is **invalid** — record it as incomplete.
 5. If the number of valid OKR files reaches the configured maximum, print a summary and stop.
 6. If valid files exist but haven't reached the maximum, show the summary and ask the user whether they want to **continue defining more OKRs** or **edit an existing one**.
-   - If the user chooses to **edit**: ask which OKR number to edit, then re-elicit the relevant sections (objective, KRs, actions) using the guidance in Step 4. Overwrite the file in Step 5 — this is the one case where overwriting is permitted.
+   - If the user chooses to **edit**: ask which OKR number to edit, then re-elicit the relevant sections (objective, KRs, initiatives) using the guidance in Step 4. Overwrite the file in Step 5 — this is the one case where overwriting is permitted.
    - If the user chooses to **continue**: proceed to Step 2.
 
 If any OKR file is invalid (failed step 3 checks), include it in the elicitation queue rather than skipping it.
@@ -49,8 +50,7 @@ Extract and hold in mind:
 - The list of company objectives (CO-1, CO-2, …) and their key results
 - The maximum number of team objectives allowed (default: 3–5)
 - The required number of key results per objective (default: 2–4)
-- Whether actions are enabled (`include_actions: true`)
-- The number of actions per key result when enabled (default: 1–3)
+- The number of initiatives per key result (default: 1–3)
 
 If either knowledge file is missing or still contains unfilled template markers (e.g., `<Brief description...>` or `CO-1: <...>`), warn the user that the knowledge files need to be filled in before proceeding, and stop.
 
@@ -61,7 +61,7 @@ If either knowledge file is missing or still contains unfilled template markers 
 Briefly introduce what you are doing:
 - How many objectives you will work through together
 - What company OKRs you are aligning to
-- That you will guide them through objectives → key results → actions
+- That you will guide them through objectives → key results → initiatives
 
 Ask how many more objectives they want to define this cycle (between 1 and `max − existing`, where `existing` is the count of valid files from Step 1 and `max` is the configured maximum).
 
@@ -82,7 +82,14 @@ For each new objective (up to N total, where N is the count the user chose in St
 - If the objective is weak or vague, suggest a sharper version and ask the user to confirm or adjust.
 - Confirm the final objective wording with the user before proceeding.
 
-**4b. Elicit key results for this objective**
+**4b. Set the OKR type**
+- Ask the user which type applies to this OKR. Briefly explain the three options:
+  - **Committed** — must be 100% achieved; resources are adjusted to ensure delivery; failure is a serious signal.
+  - **Aspirational** — a stretch goal; ~70% achievement is a success; the goal pushes the team beyond comfortable execution.
+  - **Learning** — used under genuine uncertainty; the goal is what the team wants to learn, not a fixed outcome.
+- Confirm the chosen type before proceeding.
+
+**4c. Elicit key results for this objective**
 - Tell the user you need 2–4 measurable key results for this objective.
 - For each key result:
   - Ask the user to propose one, or offer a suggestion grounded in the company OKRs and the objective.
@@ -94,11 +101,11 @@ For each new objective (up to N total, where N is the count the user chose in St
   - Record the confirmed KR with its CO-N reference.
 - Stop when the user has confirmed 2–4 key results.
 
-**4c. Elicit actions (only if `include_actions: true` in requirements)**
-- For each confirmed key result, ask the user for 1–3 concrete actions that will directly move that KR.
-- Actions must be specific, realistic, and clearly linked to their KR.
-- Suggest actions if the user needs help, drawing on the business context.
-- Confirm each action with the user.
+**4d. Elicit initiatives**
+- For each confirmed key result, ask the user for 1–3 concrete initiatives that will directly move that KR.
+- Initiatives must be specific, realistic, and clearly linked to their KR.
+- Suggest initiatives if the user needs help, drawing on the business context.
+- Confirm each initiative with the user.
 
 ---
 
@@ -111,6 +118,8 @@ Use exactly this format (write one line per confirmed item — do not add placeh
 ```
 # OKR N: <Objective Title>
 
+**Type:** <Committed | Aspirational | Learning>
+
 ## Objective
 <Objective statement — the confirmed wording from Step 4a>
 
@@ -119,14 +128,14 @@ Use exactly this format (write one line per confirmed item — do not add placeh
 2. <KR2 — measurable outcome (links to CO-X)>
 ... (one numbered line per confirmed KR, 2–4 total)
 
-## Actions
-- <Action for KR1>
-- <Action for KR1> (if a second action was confirmed for KR1)
-- <Action for KR2>
-... (one bullet per confirmed action across all KRs, in KR order)
+## Initiatives
+- <Initiative for KR1>
+- <Initiative for KR1> (if a second initiative was confirmed for KR1)
+- <Initiative for KR2>
+... (one bullet per confirmed initiative across all KRs, in KR order)
 ```
 
-Omit the `## Actions` section entirely if `include_actions` is false or not set in the requirements.
+The `## Initiatives` section is always required.
 
 Tell the user the file has been saved and show them the path.
 
