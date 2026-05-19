@@ -2,7 +2,7 @@
 name: elicit-okr
 description: Interactively elicits team-level OKRs (Objectives, Key Results, and Actions) aligned to company strategy, then saves each one to okrs/okr-N.md. Skips if valid OKR files already exist.
 license: MIT
-allowed-tools: "Read, Write, Grep"
+allowed-tools: "Read, Write, Bash, Grep"
 metadata:
   author: ""
   version: "1.0.0"
@@ -22,13 +22,19 @@ You are facilitating an OKR elicitation session. Follow these steps precisely.
 Before asking the user anything, scan for existing OKR files:
 
 1. List all files in the `okrs/` directory and identify those matching the `okr-*.md` pattern.
-2. For each file found, check that it contains:
+2. Read `knowledge/okr-requirements.md` to find the configured maximum number of objectives and whether `include_actions` is true.
+3. For each file found, check that it contains:
+   - A `# OKR N:` heading line
    - A non-empty `## Objective` section (at least one line of content after the heading)
    - At least 2 numbered items under `## Key Results`
-3. Read `knowledge/okr-requirements.md` to find the configured maximum number of objectives.
-4. If the number of valid OKR files reaches the configured maximum, print a summary and stop. If valid files exist but haven't reached the maximum, show the summary and ask the user if they want to continue defining more OKRs or edit existing ones.
+   - If `include_actions: true`: a non-empty `## Actions` section
+4. A file that fails any check above is **invalid** — record it as incomplete.
+5. If the number of valid OKR files reaches the configured maximum, print a summary and stop.
+6. If valid files exist but haven't reached the maximum, show the summary and ask the user whether they want to **continue defining more OKRs** or **edit an existing one**.
+   - If the user chooses to **edit**: ask which OKR number to edit, then re-elicit the relevant sections (objective, KRs, actions) using the guidance in Step 4. Overwrite the file in Step 5 — this is the one case where overwriting is permitted.
+   - If the user chooses to **continue**: proceed to Step 2.
 
-If any OKR file is missing or invalid (missing Objective, fewer than 2 Key Results), proceed with elicitation for the incomplete ones only.
+If any OKR file is invalid (failed step 3 checks), include it in the elicitation queue rather than skipping it.
 
 ---
 
@@ -57,15 +63,15 @@ Briefly introduce what you are doing:
 - What company OKRs you are aligning to
 - That you will guide them through objectives → key results → actions
 
-Ask how many team objectives they want to define this cycle (within the configured min/max range).
+Ask how many more objectives they want to define this cycle (between 1 and `max − existing`, where `existing` is the count of valid files from Step 1 and `max` is the configured maximum).
 
 ---
 
 ### Step 4 — Elicit each objective
 
-Before starting, determine the starting index: count the valid OKR files already found in Step 1 (call this `existing`). New objectives are numbered `existing + 1` upward.
+Before starting, determine the next available index: find the lowest positive integer `next_index` such that `okrs/okr-{next_index}.md` does not exist or is invalid. New objectives use consecutive indices starting from `next_index`.
 
-For each new objective (numbered from `existing + 1` to `existing + N`, where N is the count the user chose in Step 3):
+For each new objective (up to N total, where N is the count the user chose in Step 3):
 
 **4a. Propose or accept an objective**
 - Ask the user to state a proposed objective, or offer to suggest one based on the company OKRs.
@@ -100,7 +106,7 @@ For each new objective (numbered from `existing + 1` to `existing + N`, where N 
 
 After completing elicitation for each objective, immediately write it to `okrs/okr-N.md` where N is the objective's index from Step 4 (`existing + 1`, `existing + 2`, …). Never overwrite a file that already contains a valid OKR. The `okrs/` directory already exists via `.gitkeep`.
 
-Use exactly this format:
+Use exactly this format (write one line per confirmed item — do not add placeholder rows):
 
 ```
 # OKR N: <Objective Title>
@@ -111,12 +117,13 @@ Use exactly this format:
 ## Key Results
 1. <KR1 — measurable outcome (links to CO-X)>
 2. <KR2 — measurable outcome (links to CO-X)>
-3. <KR3 — measurable outcome (links to CO-X)>
+... (one numbered line per confirmed KR, 2–4 total)
 
 ## Actions
-- <Action 1 — drives KR1>
-- <Action 2 — drives KR2>
-- <Action 3 — drives KR3>
+- <Action for KR1>
+- <Action for KR1> (if a second action was confirmed for KR1)
+- <Action for KR2>
+... (one bullet per confirmed action across all KRs, in KR order)
 ```
 
 Omit the `## Actions` section entirely if `include_actions` is false or not set in the requirements.

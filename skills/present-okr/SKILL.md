@@ -21,7 +21,12 @@ You are generating an OKR PPTX presentation from saved OKR files. Follow these s
 
 1. List all files in the `okrs/` directory matching the `okr-*.md` pattern. If none exist, tell the user to run the `elicit-okr` skill first and stop.
 2. Read each matched OKR file and collect them all.
-3. For each file, confirm it contains a `## Objective` section and at least one `## Key Results` item. Warn about any incomplete files but continue with the valid ones.
+3. For each file, confirm it contains **all** of the following:
+   - A `# OKR N:` heading line (required for slide title extraction)
+   - A non-empty `## Objective` section
+   - At least 2 numbered items under `## Key Results`
+   Files that fail any check are **invalid** — warn the user and exclude them from the valid list.
+4. If no valid files remain after filtering, tell the user to fix their OKR files using `elicit-okr` and stop. Do not proceed with an empty valid set.
 
 ---
 
@@ -63,7 +68,7 @@ Then write a Python script to `presentations/_build_okr.py` that creates the PPT
 
 **Slides 3 to N+2 — One slide per Objective**
 
-For each OKR file, add one slide with:
+For each **valid** OKR file (from the validated list in Step 1 only), add one slide with:
 - Title: the objective title extracted from the `# OKR N:` heading line
 - Body content in this order:
   1. Objective statement (from `## Objective` section) — bold
