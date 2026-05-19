@@ -110,5 +110,5 @@ Ask the user:
 If the user wants to fix specific OKRs:
 - Work through each flagged section (objective, type, KRs, initiatives) one at a time.
 - Propose the corrected wording and confirm with the user before writing.
-- Overwrite the relevant `okrs/okr-N.md` using the same format as `elicit-okr` Step 5.
+- Overwrite the relevant okrs/okr-N.md following the format defined in knowledge/okr-requirements.md.
 - Tell the user the file has been saved after each fix.
