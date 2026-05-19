@@ -44,10 +44,23 @@ The agent helps by:
 - translating delivery constraints such as tech stack, platforms, tools, and methods into more realistic initiatives
 - helping teams define initiatives that drive the key results needed to achieve objectives
 
+## Skills
+
+The agent provides three skills designed to be run in order.
+
+### 1. `elicit-okr`
+Guides you through a structured conversation to define team-level OKRs aligned to company strategy. Saves each OKR to `okrs/okr-N.md`. Skips OKRs that are already complete so you can run it incrementally.
+
+### 2. `refine-okr`
+Reviews all saved OKRs against common mistakes and best practices — including type classification, sandbagging, activity-framed objectives, and insufficient key results. Reports issues by severity and offers to fix flagged OKRs in place.
+
+### 3. `present-okr`
+Generates a PPTX slide deck from the saved OKR files. Produces one slide per OKR showing the type, objective, key results, and initiatives, plus a title slide and a closing slide.
+
 ## Suggested Team Workflow
 
-1. Provide the company OKRs, strategic aims, and any supporting business context.
-2. Share team-level constraints, including the tech stack, platforms, tools, delivery methods, and scope boundaries.
-3. Use the agent to draft or refine objectives, key results, and initiatives.
-4. Review the output against business value, clarity, measurability, and execution realism.
-5. Iterate until the OKRs are aligned with strategic aims and usable by the team in practice.
+1. Fill in `knowledge/company-okrs.md` with your company OKRs and supporting business context.
+2. Fill in `knowledge/okr-requirements.md` with your team's constraints — max objectives, key results per objective, and any context specific to your delivery environment.
+3. Run `elicit-okr` to define your team OKRs through a guided conversation.
+4. Run `refine-okr` to review the OKRs for common mistakes and improve them before sharing.
+5. Run `present-okr` to generate a PPTX deck ready for stakeholder review.

@@ -9,7 +9,7 @@ model:
   constraints:
     temperature: 0.1
     max_tokens: 4096
-skills: [elicit-okr, present-okr]
+skills: [elicit-okr, present-okr, refine-okr]
 tools: []
 runtime:
   max_turns: 100
